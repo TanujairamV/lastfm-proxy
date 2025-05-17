@@ -49,7 +49,11 @@ app.get('/api/lastfm', async (req: express.Request, res: express.Response) => {
 
     res.json(trackData);
   } catch (error) {
-    console.error('Error fetching Last.fm data:', error.message);
+    if (error instanceof Error) {
+      console.error('Error fetching Last.fm data:', error.message);
+    } else {
+      console.error('Error fetching Last.fm data:', error);
+    }
     res.status(500).json({ error: 'Failed to fetch recent tracks' });
   }
 });
